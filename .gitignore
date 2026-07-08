@@ -1,0 +1,22 @@
+# 가상환경 (깨진 MSYS2 venv — Anaconda python 사용, 작업일지 참조)
+.venv/
+
+# IDE
+.idea/
+
+# Python 캐시
+__pycache__/
+*.pyc
+
+# UCI 실데이터 캐시 (약 22MB — real_data.py가 최초 실행 시 자동 다운로드)
+data_cache/
+
+# 폰트 (아리따 부리 약 35MB — 아모레퍼시픽 배포본을 직접 받아 배치, README 참조)
+static/fonts/*.ttf
+
+# 폰트 zip 원본
+fonts/
+
+# 내부 작업 문서 (저장소 미포함)
+작업일지.txt
+project_state.json

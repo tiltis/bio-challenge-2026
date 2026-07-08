@@ -1,0 +1,7 @@
+streamlit>=1.36
+pandas>=2.0
+numpy>=1.24,<2        # shap/xgboost ABI 호환 위해 numpy 1.x 고정
+plotly>=5.20
+scikit-learn>=1.3
+xgboost>=2.0          # 위험예측 엔진 + 내장 TreeSHAP(pred_contribs)
+anthropic>=0.40       # 선택 — ANTHROPIC_API_KEY 설정 시 RAG 건강문해력 실시간 생성

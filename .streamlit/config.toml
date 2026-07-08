@@ -1,0 +1,11 @@
+[server]
+# static/ 폴더를 app/static/ 경로로 서빙 — 아리따 글꼴(ttf) 로딩용
+enableStaticServing = true
+
+[theme]
+# 화이트톤 클린 테마 · 포인트=하늘색, 강조=주홍
+base = "light"
+primaryColor = "#0ea5e9"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f1f5f9"
+textColor = "#0f172a"
