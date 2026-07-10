@@ -27,6 +27,7 @@ streamlit run app.py     # http://localhost:8501
 | `rag_literacy.py` | RAG 기반 건강문해력 지원 (Track 1) — `ANTHROPIC_API_KEY` 설정 시 Claude 실시간 생성 |
 | `drug_api.py` | 식약처 e약은요 공공 API (`DATA_GO_KR_API_KEY` 없으면 스냅샷 폴백) |
 | `real_data.py` | UCI #296 실환자 약 7만 명 로더 + 학습 (최초 실행 시 자동 다운로드) |
+| `mockup/` | MindLink 모바일 앱 목업 3종(설명용·흰배경·편집용) + 코드 편집용 분리 소스 — [mockup/README.md](mockup/README.md) |
 
 ## 데이터·라이선스
 
