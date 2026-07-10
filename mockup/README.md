@@ -15,6 +15,7 @@
 | [`linkcure_mockup_white.html`](linkcure_mockup_white.html) | **흰 배경용** : 인쇄·문서 삽입용 (배경만 흰색, 내용 동일) | 더블클릭 → 브라우저 |
 | [`linkcure_mockup_editor.html`](linkcure_mockup_editor.html) | **편집용(단일 파일)** : 브라우저 안에서 마우스로 글자·배치 수정 | 더블클릭 → 우측 하단 `✏️ 편집 모드` |
 | [`src/`](src/) | **코드 편집용(파일 분리)** : HTML/CSS/JS를 직접 고치는 개발자 방식 | 아래 설명 참고 |
+| [`python/`](python/) | **파이썬 편집용** : PyCharm·VS Code에서 파이썬 변수만 고쳐서 목업 생성 | 아래 [수정 방법 ③](#수정-방법--파이썬으로-python-폴더) 참고 |
 
 모든 파일은 폰트가 내장되어 있어 **인터넷 없이 어느 컴퓨터에서든** 열립니다.
 
@@ -82,6 +83,36 @@ src/
 **복약지도 문구 바꾸기** : `index.html`의 `<!-- 복약지도 -->` 구역에서 처방 원문(`ot`)과 쉬운 설명(`pt`) 텍스트 수정.
 
 수정 후 `index.html`을 브라우저로 열어 확인하면 됩니다. (분리 버전에도 우측 하단 편집 모드가 그대로 살아 있습니다)
+
+## 수정 방법 ③ : 파이썬으로 (`python/` 폴더)
+
+HTML을 몰라도 **파이썬 변수만 고치면** 목업이 만들어지는 방식입니다. PyCharm이나 VS Code에서 쓰기 가장 좋습니다.
+
+```
+python/
+├── mockup_config.py   ← ★ 여기만 수정: 환자 목록, 숫자, 문구가 전부 파이썬 딕셔너리/리스트
+└── build_mockup.py    ← 실행하면 LinkCure_목업.html 생성 (수정 불필요)
+```
+
+사용 순서:
+
+1. `mockup_config.py` 를 열어 원하는 값을 고친다. 예를 들어 환자 한 명 추가:
+
+   ```python
+   PATIENTS = [
+       {"name": "김○○", "meta": "54 · 남 · 조현병", "risk": "hi",
+        "insurance": ("med", "의료급여 1종"), "tags": ["독거", "복약 불규칙"], "dday": "퇴원 D+9"},
+       # ↓ 이런 식으로 한 줄 복사해서 추가
+       {"name": "최○○", "meta": "62 · 여 · 조현병", "risk": "hi",
+        "insurance": ("med", "의료급여 1종"), "tags": ["재입원 이력"], "dday": "퇴원 D+1"},
+   ]
+   ```
+
+2. `build_mockup.py` 실행 (PyCharm: 초록 ▶ 버튼 / 터미널: `python build_mockup.py`)
+3. 같은 폴더에 생긴 `LinkCure_목업.html` 을 더블클릭해서 확인
+
+흰 배경(인쇄용)이 필요하면 `mockup_config.py` 맨 위의 `WHITE_BACKGROUND = True` 로 바꾸고 다시 실행하면 됩니다.
+※ `python/` 폴더는 옆의 `src/` 폴더(폰트·스타일)를 읽어 쓰므로, 저장소를 통째로 받아야 작동합니다.
 
 ## 캡처(이미지로 저장)하는 법
 
