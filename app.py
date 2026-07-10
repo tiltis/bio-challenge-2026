@@ -1,5 +1,5 @@
 """
-app.py — AI 기반 Two-Track Care Coordination Platform (데모 대시보드)
+app.py : AI 기반 Two-Track Care Coordination Platform (데모 대시보드)
 정신질환 퇴원환자의 치료중단·재입원 위험을 예측하고, Two-Track으로 개입을 연계한다.
 2026 연구 아이디어 기술사업화 챌린지 · 경북대학교병원 팀
 
@@ -11,18 +11,18 @@ app.py — AI 기반 Two-Track Care Coordination Platform (데모 대시보드)
 
 문헌 근거(피처 설계·모델 선택·성능 기준):
 - Donisi et al., BMC Psychiatry 2016 (정신과 재입원 예측인자 체계적 문헌고찰
-  — '과거 입원력'이 가장 일관된 예측인자)
+  : '과거 입원력'이 가장 일관된 예측인자)
 - Morel et al., Int J Med Inform 2020 (정신·물질사용장애 30일 재입원 XGBoost,
-  AUROC 0.738 — 과거입원·의료이용·퇴원형태·진단·동반질환이 상위 피처)
+  AUROC 0.738 : 과거입원·의료이용·퇴원형태·진단·동반질환이 상위 피처)
 - McCoy & Perlis 그룹, Transl Psychiatry 2021 (정신과 재입원 예측 난이도,
   인구학 기반 AUC ~0.68)
 - Ren et al., JMIR Ment Health 2025 (기관 간 모델 이식성 한계
-  — 병원별 site-specific 학습 필요 → 본 설계의 온프레미스 재학습 근거)
+  : 병원별 site-specific 학습 필요 → 본 설계의 온프레미스 재학습 근거)
 
 실행: streamlit run app.py
-요구사항: streamlit >= 1.37 (use_container_width API — 설치본 1.37.1 호환),
+요구사항: streamlit >= 1.37 (use_container_width API : 설치본 1.37.1 호환),
           .streamlit/config.toml 에 [server] enableStaticServing = true
-          (아리따 부리 폰트 static/fonts 정적 서빙용 — 없으면 시스템 serif 폴백)
+          (아리따 부리 폰트 static/fonts 정적 서빙용 : 없으면 시스템 serif 폴백)
 """
 
 import numpy as np
@@ -73,7 +73,7 @@ from real_data import (load_uci, train_and_score_uci, uci_global_importance,
 
 # 라이트 테마용 색 오버라이드 (Track 1=하늘, Track 2=주홍)
 TRACK_COLORS = {"Track 1": SKY, "Track 2": DANGER}
-# 밴드 배지(흰 글자 채움) — WCAG 대비 확보를 위해 어두운 톤으로 에스컬레이션.
+# 밴드 배지(흰 글자 채움) : WCAG 대비 확보를 위해 어두운 톤으로 에스컬레이션.
 # (기존 #f79009·#f2762e 는 흰 글자와 대비 2.2~2.6:1로 가독성 미달 → 교체)
 BAND_COLORS = {"낮음": SKY_DK, "중간": "#b54708",
                "높음": "#c4320a", "매우높음": "#912018"}
@@ -99,7 +99,7 @@ st.markdown(f"""
   h1,h2,h3,h4,h5,h6 {{
     font-family:'AritaBuri',serif; font-weight:700; letter-spacing:-0.01em; color:{INK}; }}
 
-  /* 가독성 — 본문 줄간격·크기 확보 (세리프 한글 대비) */
+  /* 가독성 : 본문 줄간격·크기 확보 (세리프 한글 대비) */
   .stApp {{ background:{APP_BG}; font-size:16px; }}
   p, li {{ line-height:1.72; }}
   .stMarkdown li {{ margin-bottom:2px; }}
@@ -114,19 +114,19 @@ st.markdown(f"""
   a {{ color:{SKY_DK}; }}
   hr {{ border-color:{BORDER}; margin:1.1rem 0; }}
 
-  /* 배지(pill) — 밴드용 플랫 태그(채움) */
+  /* 배지(pill) : 밴드용 플랫 태그(채움) */
   .pill {{ display:inline-block; padding:3px 12px; border-radius:7px;
     color:#fff; font-weight:700; font-size:0.8rem; letter-spacing:.01em; }}
-  /* Track 배지 — 채움 없이 연핑크 테두리 + 진한 글자(가독) */
+  /* Track 배지 : 채움 없이 연핑크 테두리 + 진한 글자(가독) */
   .pill-track {{ display:inline-block; padding:3px 13px; border-radius:7px;
     background:{PINK_BG}; color:{INK}; border:1.5px solid {PINK};
     font-weight:700; font-size:0.82rem; letter-spacing:.01em; }}
 
-  /* KPI 카드 — 4칸 동일 높이 */
+  /* KPI 카드 : 4칸 동일 높이 */
   .kpi {{ min-height:122px; display:flex; flex-direction:column; justify-content:center; }}
   .kpi h2 {{ margin:4px 0 2px; }}
 
-  /* 카드 — 클릭/호버 인터랙션 (절제된 그림자) */
+  /* 카드 : 클릭/호버 인터랙션 (절제된 그림자) */
   .card {{ background:#ffffff; border:1px solid {BORDER}; border-radius:14px;
     padding:16px 18px; box-shadow:0 1px 3px rgba(16,24,40,.05);
     transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; }}
@@ -143,7 +143,7 @@ st.markdown(f"""
     border-radius:10px; font-size:0.88rem; color:#b54708; }}
   .warn-note b {{ color:{RED_DK}; }}
 
-  /* 초보자 안내 스트립 — 저채도 정돈 */
+  /* 초보자 안내 스트립 : 저채도 정돈 */
   .intro {{ background:{SURFACE}; border:1px solid {BORDER}; border-left:3px solid {SKY};
     border-radius:9px; padding:9px 14px; font-size:0.88rem; color:{BODY}; margin-bottom:8px; }}
   .intro b {{ color:{SKY_DK}; }}
@@ -162,14 +162,14 @@ st.markdown(f"""
   div[data-testid="stMetricValue"] {{ color:{INK}; }}
   div[data-testid="stMetricLabel"] {{ color:{MUTED}; }}
 
-  /* 탭 — 호버/선택 인터랙션 (하늘 포인트) */
+  /* 탭 : 호버/선택 인터랙션 (하늘 포인트) */
   button[data-baseweb="tab"] {{ transition:background .15s ease, color .15s ease;
     border-radius:10px 10px 0 0; padding:6px 10px; }}
   button[data-baseweb="tab"]:hover {{ background:{SKY_BG}; color:{SKY_DK}; }}
   button[data-baseweb="tab"][aria-selected="true"] {{ color:{SKY_DK}; }}
   [data-baseweb="tab-highlight"], [data-baseweb="tab-border"] {{ background-color:{SKY} !important; }}
 
-  /* 버튼 — 눌리는 느낌 */
+  /* 버튼 : 눌리는 느낌 */
   .stButton>button, .stDownloadButton>button, .stFormSubmitButton>button {{
     transition:transform .12s ease, box-shadow .15s ease, filter .15s ease;
     border-radius:10px; }}
@@ -191,7 +191,7 @@ st.markdown(f"""
 
 def tab_intro(text):
     """각 탭 상단 초보자용 한 줄 안내."""
-    st.markdown(f"<div class='intro'>🔰 <b>쉽게 말하면</b> — {text}</div>",
+    st.markdown(f"<div class='intro'>🔰 <b>쉽게 말하면</b> : {text}</div>",
                 unsafe_allow_html=True)
 
 
@@ -247,7 +247,7 @@ st.markdown("##### 병원 EMR로 퇴원 시점의 치료중단·재입원 위험
             "‘우선 개입할 고위험 환자’를 제시하고 병원–의료사회복지사–정신건강복지센터를 하나의 "
             "업무 흐름으로 잇는 **의사결정 지원 시스템**")
 st.markdown(
-    f"<div class='intro' style='margin-top:2px'>🎯 <b>이 플랫폼의 목적</b> — 퇴원 후 "
+    f"<div class='intro' style='margin-top:2px'>🎯 <b>이 플랫폼의 목적</b> : 퇴원 후 "
     f"외래·복약이 끊긴 환자를 <b>조기에 포착해 공공 관리체계 안으로 다시 연결</b>합니다. "
     f"<b>환자용 앱이 아니라</b>, 병원·의료사회복지사·정신건강복지센터가 데이터를 근거로 "
     f"<b>먼저 개입</b>하도록 돕는 실무자용 도구입니다.</div>", unsafe_allow_html=True)
@@ -278,7 +278,7 @@ c4.markdown(f"<div class='card kpi'><span style='color:{MUTED}'>예측 성능(AU
 st.markdown("")
 
 # ---------------------------------------------------------------- 시작 가이드(초보자)
-with st.expander("🔰 처음 오셨나요? — 30초 사용 설명 (클릭해서 펼치기/접기)", expanded=True):
+with st.expander("🔰 처음 오셨나요? : 30초 사용 설명 (클릭해서 펼치기/접기)", expanded=True):
     st.markdown(
         f"<div class='guide'>"
         f"<p style='margin:4px 2px 10px;font-size:0.96rem;color:{INK}'>"
@@ -352,8 +352,8 @@ with tabs[0]:
     pretty["risk_prob"] = (pretty["risk_prob"] * 100).round(0)
     pretty["prior_noshow_rate"] = (pretty["prior_noshow_rate"] * 100).round(0)
     pretty["med_pdc"] = (pretty["med_pdc"] * 100).round(0)
-    pretty["lives_alone"] = np.where(pretty["lives_alone"] == 1, "예", "—")
-    pretty["medicaid"] = np.where(pretty["medicaid"] == 1, "예", "—")
+    pretty["lives_alone"] = np.where(pretty["lives_alone"] == 1, "예", "-")
+    pretty["medicaid"] = np.where(pretty["medicaid"] == 1, "예", "-")
     pretty = pretty.rename(columns={
         "patient_id": "환자", "diagnosis": "진단", "age": "연령",
         "prior_admissions": "과거입원", "prior_noshow_rate": "외래미방문율",
@@ -377,7 +377,7 @@ with tabs[0]:
 
     # ---------------- 실제 도입에 필요한 데이터 (기술 강화) ----------------
     st.markdown("---")
-    st.markdown("#### 🔧 실제 병원 도입 시 필요한 데이터 — 무엇을, 어디서, 어떤 형식으로")
+    st.markdown("#### 🔧 실제 병원 도입 시 필요한 데이터 : 무엇을, 어디서, 어떤 형식으로")
     st.markdown(
         f"<div class='intro'>아래 표의 값들은 <b>대부분 병원 EMR·처방시스템에 이미 존재</b>합니다. "
         f"새로 수집할 것은 사회경제 항목(초기 사회사업 평가) 정도이며, 표준코드(ICD-10·ATC·FHIR)로 "
@@ -408,7 +408,7 @@ with tabs[0]:
         unsafe_allow_html=True)
     r3.markdown(
         f"<div class='card'><b style='color:{SKY_DK}'>🔁 운영</b>"
-        f"<p style='font-size:0.85rem'>월 단위 재학습으로 성능 유지 — 기관 간 모델 이식성이 "
+        f"<p style='font-size:0.85rem'>월 단위 재학습으로 성능 유지 : 기관 간 모델 이식성이 "
         f"낮아 <b>병원별(site-specific) 학습</b>이 필요하다는 최신 근거(Ren et al., "
         f"JMIR Ment Health 2025)와 부합. FHIR Bundle 수신 시 "
         f"<b>퇴원 순간 자동 예측</b> (환자 앱 입력에 의존하지 않음).</p></div>",
@@ -472,7 +472,7 @@ with tabs[1]:
         st.caption("임계값은 운영 정책에 따라 조정 가능합니다(민감도 vs 의료사회복지사 업무량 트레이드오프).")
 
     st.markdown("---")
-    st.markdown("#### SHAP 전역 피처 중요도 — 무엇이 위험을 끌어올리나")
+    st.markdown("#### SHAP 전역 피처 중요도 : 무엇이 위험을 끌어올리나")
     st.caption("막대가 길수록 그 항목이 위험 판단에 더 크게 작용했다는 뜻입니다(전체 환자 평균 기준).")
     gi = global_importance(SHP)[:12][::-1]
     bar = go.Figure(go.Bar(
@@ -485,7 +485,7 @@ with tabs[1]:
                       font=dict(color=BODY))
     st.plotly_chart(bar, use_container_width=True)
     st.caption("과거 치료중단·낮은 복약보유율(PDC)·높은 외래 미방문율·과거 입원력이 핵심 위험요인으로 "
-               "학습됨 — 문헌과 일치: 체계적 고찰에서 ‘과거 입원력’이 가장 일관된 재입원 예측인자였고 "
+               "학습됨 : 문헌과 일치: 체계적 고찰에서 ‘과거 입원력’이 가장 일관된 재입원 예측인자였고 "
                "(Donisi et al., BMC Psychiatry 2016), 복약 비순응은 재입원과 강하게 연관된 "
                "대표 요인입니다(1년 재입원 독립 예측인자로 반복 보고).")
 
@@ -501,7 +501,7 @@ with tabs[2]:
     st.markdown(
         f"<div class='intro'>퇴원 시점에 AI가 위험도를 계산해 <b>Track 2(고위험)</b> 환자를 "
         f"위험 높은 순으로 자동 정렬합니다. 담당자는 이 목록의 <b>위에서부터</b> 개입하면 "
-        f"됩니다 — ‘누구를 먼저 봐야 하나’를 데이터로 답합니다.</div>", unsafe_allow_html=True)
+        f"됩니다 : ‘누구를 먼저 봐야 하나’를 데이터로 답합니다.</div>", unsafe_allow_html=True)
 
     def _top_drivers(idx, k=3):
         sp = patient_shap(SHP, X, idx)
@@ -523,7 +523,7 @@ with tabs[2]:
     })
     wc1, wc2, wc3 = st.columns(3)
     wc1.metric("고위험(Track 2) 총원", f"{total_t2}명")
-    wc2.metric("대기열 최상위 위험도", f"{int(wl['risk_prob'].iloc[0]*100)}%" if len(wl) else "—")
+    wc2.metric("대기열 최상위 위험도", f"{int(wl['risk_prob'].iloc[0]*100)}%" if len(wl) else "-")
     wc3.metric("표시 중", f"상위 {len(wl)}명")
     st.dataframe(
         worklist, use_container_width=True, height=430, hide_index=True,
@@ -536,12 +536,12 @@ with tabs[2]:
             "주요 위험요인(SHAP)": st.column_config.TextColumn(width="large"),
             "권고 조치": st.column_config.TextColumn(width="large"),
         })
-    st.caption("이 대기열이 곧 ‘업무 흐름의 시작점’입니다 — 병원(자동 선별) → 의료사회복지사"
+    st.caption("이 대기열이 곧 ‘업무 흐름의 시작점’입니다 : 병원(자동 선별) → 의료사회복지사"
                "(위 목록 순 개입) → 정신건강복지센터(환자 동의 기반 연계)로 이어집니다. "
                "실서비스에서는 퇴원 시점에 이 목록이 담당자 화면에 자동으로 뜹니다.")
 
     st.markdown("---")
-    st.markdown("### 🔎 개별 환자 상세 — 위험 근거 확인")
+    st.markdown("### 🔎 개별 환자 상세 : 위험 근거 확인")
     st.markdown(f"<div class='intro'>대기열에서 확인할 환자를 <b>왼쪽 사이드바</b>에서 고르면 "
                 f"아래가 그 환자 기준으로 바뀝니다. 현재 선택: <b>{sel}</b></div>",
                 unsafe_allow_html=True)
@@ -570,7 +570,7 @@ with tabs[2]:
             st.markdown(f"- {k}: **{v}**")
 
     with h2:
-        st.markdown("#### 이 환자의 SHAP 기여도 — 왜 이렇게 예측했나")
+        st.markdown("#### 이 환자의 SHAP 기여도 : 왜 이렇게 예측했나")
         sp = patient_shap(SHP, X, i)[:10][::-1]
         colors = [DANGER if s > 0 else SKY for _, s, _ in sp]
         wf = go.Figure(go.Bar(
@@ -602,9 +602,9 @@ with tabs[3]:
     row = DF.iloc[i]
     track = row["track"]; prob = row["risk_prob"]
 
-    st.markdown(f"### 대응 · 개입 연계 — `{sel}` ({track})")
+    st.markdown(f"### 대응 · 개입 연계 : `{sel}` ({track})")
     st.markdown(
-        f"<div class='intro'>🔗 <b>하나의 업무 흐름</b> — "
+        f"<div class='intro'>🔗 <b>하나의 업무 흐름</b> : "
         f"<b>병원</b>(EMR로 위험 자동 선별) → <b>의료사회복지사</b>(③ 대기열 순 개입) → "
         f"<b>정신건강복지센터</b>(환자 동의 기반 지역사회 연계). 이 탭은 그 흐름에서 "
         f"선택 환자에게 실제로 무엇을 하는지 보여줍니다.</div>", unsafe_allow_html=True)
@@ -630,7 +630,7 @@ with tabs[3]:
                           "snapshot": " `식약처 e약은요 · 스냅샷`"}
             for r in rag["retrieved"]:
                 badge = _SRC_BADGE.get(r.get("src", ""), "")
-                st.markdown(f"- **{r['key']}**{badge} — {r['plain']}")
+                st.markdown(f"- **{r['key']}**{badge} : {r['plain']}")
         with d2:
             st.markdown("**③ 환자·보호자용 쉬운말 재구성**")
             st.markdown(f"<div class='card'>{rag['text']}</div>", unsafe_allow_html=True)
@@ -670,7 +670,7 @@ with tabs[3]:
     st.markdown("---")
     st.markdown("#### 의료 규제 안전 설계 체크리스트")
     for label in [
-        "진단 라벨 미출력 — 위험 신호·Track 배정만 제공",
+        "진단 라벨 미출력 : 위험 신호·Track 배정만 제공",
         "예측 근거를 SHAP으로 항상 제시 (설명가능 AI, 블랙박스 배제)",
         "전문의 직접 처방 대신 ‘의료사회복지사 확인·연계 권고’",
         "RAG: LLM은 검색된 근거 밖 의학정보를 생성하지 않음(환각 억제)",
@@ -683,14 +683,14 @@ with tabs[3]:
 # ================================================================ ⑤ 차별점·성능
 with tabs[4]:
     tab_intro("<b>왜 기존 서비스와 다른지</b>, 그리고 AI 모델 성능은 어떤지 정리한 탭입니다.")
-    st.markdown("### 차별점 — 예측에서 끝내지 않고 ‘개입의 고리’를 닫는다")
+    st.markdown("### 차별점 : 예측에서 끝내지 않고 ‘개입의 고리’를 닫는다")
     st.markdown(
         "기존 정신건강 솔루션의 한계: **① 자발적 참여 의존(고위험군 누락) · "
         "② 의료문서 요약에 그쳐 병원·지역사회 연계 단절 · ③ 신체질환 중심 통합돌봄**. "
         "본 플랫폼은 EMR 위험예측 → Two-Track → (Track1 건강문해력 / Track2 사회복지·센터 연계)로 "
         "병원-의료사회복지사-정신건강복지센터를 하나의 프로세스로 연결합니다.")
 
-    st.markdown("#### 모델 비교 — 성능은 대등, XGBoost는 ‘설명가능성’으로 채택")
+    st.markdown("#### 모델 비교 : 성능은 대등, XGBoost는 ‘설명가능성’으로 채택")
     cmp = get_compare()
     names = list(cmp.keys()); vals = [cmp[n] for n in names]
     cc = st.columns(len(cmp))
@@ -707,7 +707,7 @@ with tabs[4]:
     st.plotly_chart(barfig, use_container_width=True)
     st.caption("세 모델의 예측 성능은 대등합니다. XGBoost를 채택한 이유는 ① 정식 SHAP(TreeSHAP) "
                "내장으로 모든 예측에 임상 근거 제시(설명가능 AI), ② 비선형·결측·스케일에 강건, "
-               "③ EMR 피처 확장에 용이 — 즉 ‘성능’이 아니라 임상 신뢰·운영성에서의 우위입니다. "
+               "③ EMR 피처 확장에 용이 : 즉 ‘성능’이 아니라 임상 신뢰·운영성에서의 우위입니다. "
                "정신·물질사용장애 재입원 예측 대규모 연구에서도 XGBoost(AUROC 0.738)가 "
                "정규화 선형모형(0.697)을 상회했습니다(Morel et al., Int J Med Inform 2020). "
                "본 아이디어의 진짜 차별점은 모델이 아니라 아래 Two-Track 연계 구조입니다.")
@@ -736,7 +736,7 @@ with tabs[4]:
 
     # ---------------- 사업화·실증 로드맵 (데이터 성숙도 단계) ----------------
     st.markdown("---")
-    st.markdown("#### 🚀 사업화·실증 로드맵 — ‘합성 PoC → 실데이터 → 병원 실증’ 데이터 성숙도")
+    st.markdown("#### 🚀 사업화·실증 로드맵 : ‘합성 PoC → 실데이터 → 병원 실증’ 데이터 성숙도")
     st.markdown(
         f"<div class='intro'>심사에서 가장 중요한 질문은 <b>“합성 데이터로 만든 게 실제로 되겠는가”</b>입니다. "
         f"그 답은 <b>데이터를 갈아끼우는 경로가 이미 설계돼 있다</b>는 것입니다. 아래 3단계는 "
@@ -749,11 +749,11 @@ with tabs[4]:
          "전처리→학습→SHAP→Two-Track 전 과정이 실데이터에서 작동함을 증명(⑥탭)",
          "비용 0 · 규제 이슈 없음 · 즉시 재현 가능"],
         ["2단계 · 국내 공개 실데이터",
-         "HIRA 환자표본자료(HIRA-NPS) — 정신·행동장애(ICD-10 F코드) 청구 실데이터",
+         "HIRA 환자표본자료(HIRA-NPS) : 정신·행동장애(ICD-10 F코드) 청구 실데이터",
          "한국 정신질환 재입원을 실제 국내 데이터로 학습·검증(도메인 일치)",
          "연구계획서+소액 수수료로 신청 가능 · 비식별 공개 자료"],
         ["3단계 · 병원 실증 (사업화)",
-         "협력병원 정신과 EMR(FHIR) — 도입 병원 자체 데이터로 온프레미스 재학습",
+         "협력병원 정신과 EMR(FHIR) : 도입 병원 자체 데이터로 온프레미스 재학습",
          "site-specific 모델로 실사용 성능 확보 → SaaS 납품",
          "IRB 승인·데이터 심의 필요 · 병원 내 학습(정보 미반출)"],
     ], columns=["단계", "데이터 소스", "무엇을 증명/달성하나", "규제·비용 조건"])
@@ -761,7 +761,7 @@ with tabs[4]:
     st.caption("핵심: 1→2→3단계에서 XGBoost·SHAP·RAG·Two-Track 코드는 그대로이고 "
                "'데이터 소스'만 바뀝니다. 도메인 불일치(당뇨) 우려는 2단계 HIRA F코드 데이터로 "
                "정신과 도메인에 정렬되며, 3단계에서 병원별(site-specific) 재학습으로 "
-               "실사용 성능을 확보합니다 — 기관 간 이식성이 낮다는 최신 근거(Ren et al. 2025)와 "
+               "실사용 성능을 확보합니다 : 기관 간 이식성이 낮다는 최신 근거(Ren et al. 2025)와 "
                "부합하는 현실적 전략입니다.")
 
     rd1, rd2, rd3 = st.columns(3)
@@ -802,7 +802,7 @@ def load_uci_all():
 with tabs[5]:
     tab_intro("합성(가짜) 데이터가 아니라 <b>진짜 환자 공개 데이터</b>로도 이 파이프라인이 "
               "작동하는지 증명하는 탭입니다.")
-    st.markdown("### 실데이터 검증 — 공개 실환자 데이터로 파이프라인이 실제로 작동함을 확인")
+    st.markdown("### 실데이터 검증 : 공개 실환자 데이터로 파이프라인이 실제로 작동함을 확인")
     st.markdown(
         "<div class='warn-note'><b>왜 정신과 실데이터가 아닌가?</b> 한국의 정신과 EMR은 "
         "민감정보(개인정보보호법)·IRB 승인 대상이라 아이디어 검증 단계에서 사용할 수 없고, "
@@ -821,7 +821,7 @@ with tabs[5]:
     mu = res_u["metrics"]
 
     st.markdown(
-        f"<div class='card'><b>데이터 출처</b> — UCI Machine Learning Repository #296 · "
+        f"<div class='card'><b>데이터 출처</b> : UCI Machine Learning Repository #296 · "
         "<i>Diabetes 130-US Hospitals (1999–2008)</i><br>"
         "미국 130개 병원의 <b>실제 입원 환자</b> 기록 (비식별 처리 완료 · CC BY 4.0 공개 라이선스)<br>"
         f"전처리 후 <b>{len(res_u['df']):,}명</b> (사망·호스피스 퇴원 제외, 환자당 1건으로 "
@@ -837,13 +837,13 @@ with tabs[5]:
     k3.metric("AUROC", f"{mu['auroc']:.3f}")
     k4.metric("AUPRC", f"{mu['auprc']:.3f}")
     st.caption(f"홀드아웃 {mu['n_test']:,}명 평가. 원 논문(Strack et al. 2014) 보고 성능과 "
-               "동일 수준 — 과장 없는 정직한 결과입니다. 30일 재입원은 원래 예측이 어려운 "
+               "동일 수준 : 과장 없는 정직한 결과입니다. 30일 재입원은 원래 예측이 어려운 "
                "과제이며(정신과 영역에서도 문헌 보고 AUROC 0.68~0.75 수준), 핵심은 수치가 "
                "아니라 실데이터에서 파이프라인이 작동한다는 사실입니다.")
 
     cL, cR = st.columns(2)
     with cL:
-        st.markdown("#### ROC — 합성 코호트 vs 실데이터")
+        st.markdown("#### ROC : 합성 코호트 vs 실데이터")
         fpr_s, tpr_s = METRICS["roc"]
         fpr_u, tpr_u = mu["roc"]
         rocu = go.Figure()
@@ -870,11 +870,11 @@ with tabs[5]:
                            font=dict(color=BODY))
         st.plotly_chart(baru, use_container_width=True)
         st.caption("실데이터에서도 ‘과거 입원 횟수·재원일수·퇴원 형태’가 핵심 위험요인으로 "
-                   "학습됨 — 합성 코호트의 설계 가정 및 정신과 재입원 ML 문헌의 상위 피처"
+                   "학습됨 : 합성 코호트의 설계 가정 및 정신과 재입원 ML 문헌의 상위 피처"
                    "(과거입원·의료이용·퇴원형태·동반질환, Morel et al. 2020)와 일치.")
 
     st.markdown("---")
-    st.markdown("#### 피처 스키마 사상 — 합성 정신과 코호트 ↔ 실데이터 (동일 구조 증명)")
+    st.markdown("#### 피처 스키마 사상 : 합성 정신과 코호트 ↔ 실데이터 (동일 구조 증명)")
     map_df = pd.DataFrame(FEATURE_MAPPING,
                           columns=["개념", "합성 정신과 코호트", "UCI 실데이터"])
     st.dataframe(map_df, use_container_width=True, height=320)
@@ -882,7 +882,7 @@ with tabs[5]:
                "교체 시 스키마 매핑만으로 동일 파이프라인이 학습됩니다.")
 
     st.markdown("---")
-    st.markdown("#### 실데이터 연결 ② — 식약처 ‘의약품개요정보(e약은요)’ 공공 API")
+    st.markdown("#### 실데이터 연결 ② : 식약처 ‘의약품개요정보(e약은요)’ 공공 API")
     api_on = drug_api.api_available()
     status = ("🟢 실시간 연동 중 (DATA_GO_KR_API_KEY 설정됨)" if api_on
               else "🟡 오프라인 스냅샷 모드 (키 설정 시 실시간 API로 자동 전환)")
@@ -896,7 +896,7 @@ with tabs[5]:
     info = drug_api.lookup(pick)
     if info:
         src = "실시간 API" if info["source"] == "live" else "스냅샷(폴백)"
-        st.markdown(f"**{info['name']}** — 출처: 식약처 e약은요 · {src}")
+        st.markdown(f"**{info['name']}** : 출처: 식약처 e약은요 · {src}")
         st.markdown(f"- 효능: {info['efficacy']}")
         st.markdown(f"- 복용법: {info['usage']}")
         st.markdown(f"- 주의: {info['caution']}")
@@ -907,7 +907,7 @@ with tabs[5]:
 def _predict_rows(raw_df):
     """
     원시 입력(진단명 + 수치/이진 피처) DataFrame → 위험확률·Track·밴드 부여.
-    학습된 모델을 그대로 사용 — '데이터가 들어오면 즉시 예측'되는 운영 흐름 시연.
+    학습된 모델을 그대로 사용 : '데이터가 들어오면 즉시 예측'되는 운영 흐름 시연.
     """
     feat = raw_df.copy()
     for d in DIAGNOSES:
@@ -928,7 +928,7 @@ with tabs[6]:
     st.markdown(
         "<div class='safe-note'>실서비스에서는 병원 EMR(FHIR)에서 퇴원 시점에 <b>자동으로 "
         "데이터가 유입</b>되며, 환자 본인의 앱 입력에 의존하지 않습니다(신청서 차별성). "
-        "이 탭은 그 유입 순간을 시연합니다 — 담당자가 값을 넣거나 CSV를 올리면 "
+        "이 탭은 그 유입 순간을 시연합니다 : 담당자가 값을 넣거나 CSV를 올리면 "
         "학습된 모델이 <b>즉시</b> 위험확률과 Track을 산출합니다.</div>",
         unsafe_allow_html=True)
     st.markdown("")
@@ -1011,7 +1011,7 @@ with tabs[6]:
                                   plot_bgcolor="rgba(0,0,0,0)",
                                   font=dict(color=BODY))
                 st.plotly_chart(wfn, use_container_width=True)
-            st.caption("PDC·no-show·독거 값을 바꿔 다시 예측해 보세요 — 위험확률과 "
+            st.caption("PDC·no-show·독거 값을 바꿔 다시 예측해 보세요 : 위험확률과 "
                        "SHAP 근거가 실시간으로 바뀝니다.")
 
     else:
@@ -1031,7 +1031,7 @@ with tabs[6]:
             if raw is not None:
                 missing = [c for c in RAW_COLS if c not in raw.columns]
                 if missing:
-                    st.error(f"필수 컬럼 누락: {', '.join(missing)} — 템플릿 형식을 사용해 주세요.")
+                    st.error(f"필수 컬럼 누락: {', '.join(missing)} : 템플릿 형식을 사용해 주세요.")
                 elif not raw["diagnosis"].isin(DIAGNOSES).all():
                     bad = raw.loc[~raw["diagnosis"].isin(DIAGNOSES), "diagnosis"].unique()
                     st.error(f"알 수 없는 진단명: {', '.join(map(str, bad))} "
@@ -1045,7 +1045,7 @@ with tabs[6]:
                         pred = None
                     if pred is not None:
                         n2 = int((pred["track"] == "Track 2").sum())
-                        st.success(f"{len(pred)}명 예측 완료 — Track 2(고위험) {n2}명 · "
+                        st.success(f"{len(pred)}명 예측 완료 : Track 2(고위험) {n2}명 · "
                                    f"Track 1 {len(pred)-n2}명")
                         view = pred.copy()
                         view["위험%"] = (view["risk_prob"] * 100).round(0)
@@ -1061,7 +1061,7 @@ with tabs[6]:
                         st.download_button("예측 결과 CSV 내려받기",
                                            pred.to_csv(index=False).encode("utf-8-sig"),
                                            file_name="예측결과.csv", mime="text/csv")
-        st.caption("실서비스에서는 이 단계가 병원 EMR(FHIR Bundle) 수신으로 자동화됩니다 — "
+        st.caption("실서비스에서는 이 단계가 병원 EMR(FHIR Bundle) 수신으로 자동화됩니다 : "
                    "CSV 업로드는 그 유입 지점을 대신 시연하는 것입니다.")
 
 
@@ -1071,21 +1071,21 @@ st.markdown(
     f"<div class='card' style='background:{SURFACE}'>"
     f"<b style='color:{INK};font-size:1.02rem'>📚 데이터 출처 · 라이선스 · 참고문헌</b>"
     f"<ul style='margin:10px 0 2px;font-size:0.86rem;line-height:1.85'>"
-    f"<li><b>합성 정신과 퇴원 코호트</b> (본문 대시보드, 1,500건) — 자체 생성"
+    f"<li><b>합성 정신과 퇴원 코호트</b> (본문 대시보드, 1,500건) : 자체 생성"
     f" (<code>data_generator.py</code>). 임상적으로 알려진 위험요인(복약순응도·과거입원·"
     f"독거·외래 미방문 등)의 <b>방향성</b>을 반영해 설계한 <b>가상 데이터이며, 실제 환자 자료가"
     f" 아닙니다</b>(특정 논문 수치를 그대로 인용하지 않음).</li>"
-    f"<li><b>UCI #296 · Diabetes 130-US Hospitals (1999–2008)</b> — 미국 130개 병원 "
+    f"<li><b>UCI #296 · Diabetes 130-US Hospitals (1999–2008)</b> : 미국 130개 병원 "
     f"실환자 공개데이터 · 라이선스 <b>CC BY 4.0</b> · Strack et al., <i>BioMed Research "
     f"International</i>, 2014 · "
     f"<a href='https://archive.ics.uci.edu/dataset/296' target='_blank'>"
     f"archive.ics.uci.edu/dataset/296</a></li>"
-    f"<li><b>식약처 의약품개요정보(e약은요)</b> — 공공데이터포털 공개 API(개인정보 아님) · "
+    f"<li><b>식약처 의약품개요정보(e약은요)</b> : 공공데이터포털 공개 API(개인정보 아님) · "
     f"<a href='https://www.data.go.kr' target='_blank'>data.go.kr</a></li>"
-    f"<li><b>글꼴</b> — 아리따 부리(Arita Buri), 아모레퍼시픽 무료 배포 · "
+    f"<li><b>글꼴</b> : 아리따 부리(Arita Buri), 아모레퍼시픽 무료 배포 · "
     f"<a href='https://www.apgroup.com/int/ko/about-us/visual-identity/arita-typeface/"
     f"arita-typeface.html' target='_blank'>apgroup.com</a></li>"
-    f"<li><b>소스 코드</b> — GitHub 공개 저장소 · "
+    f"<li><b>소스 코드</b> : GitHub 공개 저장소 · "
     f"<a href='https://github.com/tiltis/bio-challenge-2026' target='_blank'>"
     f"github.com/tiltis/bio-challenge-2026</a></li>"
     f"</ul>"
@@ -1095,25 +1095,25 @@ st.markdown(
     f"[1] Donisi V, Tedeschi F, Wahlbeck K, Haaramo P, Amaddeo F. Pre-discharge factors "
     f"predicting readmissions of psychiatric patients: a systematic review of the literature. "
     f"<i>BMC Psychiatry</i>. 2016 Dec 16;16(1):449. doi:10.1186/s12888-016-1114-0. "
-    f"PMID:27986079. — 과거 입원력이 가장 일관된 재입원 예측인자.<br>"
+    f"PMID:27986079. : 과거 입원력이 가장 일관된 재입원 예측인자.<br>"
     f"[2] Morel D, Yu KC, Liu-Ferrara A, Caceres-Suriel AJ, Kurtz SG, Tabak YP. Predicting "
     f"hospital readmission in patients with mental or substance use disorders: a machine "
     f"learning approach. <i>Int J Med Inform</i>. 2020 Jul;139:104136. "
-    f"doi:10.1016/j.ijmedinf.2020.104136. PMID:32353752. — 65,426명 분석, "
+    f"doi:10.1016/j.ijmedinf.2020.104136. PMID:32353752. : 65,426명 분석, "
     f"XGBoost AUROC 0.738 vs GLMNet 0.697; 상위 피처: 과거입원·의료이용·퇴원형태·진단·동반질환.<br>"
     f"[3] Boag W, Kovaleva O, McCoy TH Jr, Rumshisky A, Szolovits P, Perlis RH. Hard for "
     f"humans, hard for machines: predicting readmission after psychiatric hospitalization "
     f"using narrative notes. <i>Transl Psychiatry</i>. 2021 Jan 11;11(1):32. "
-    f"doi:10.1038/s41398-020-01104-w. PMID:33431794. — 인구학 기반 AUC 0.675로 "
+    f"doi:10.1038/s41398-020-01104-w. PMID:33431794. : 인구학 기반 AUC 0.675로 "
     f"정신과 재입원 예측의 본질적 난이도 확인.<br>"
     f"[4] Ren B, Yoon W, Thomas S, Savova G, Miller T, Hall MH. Cross-site predictions of "
     f"readmission after psychiatric hospitalization with mood or psychotic disorders: "
     f"retrospective study. <i>JMIR Ment Health</i>. 2025 Sep 12;12:e71630. "
-    f"doi:10.2196/71630. PMID:40939119. — 기관 간 모델 이식성 한계 → 병원별 "
+    f"doi:10.2196/71630. PMID:40939119. : 기관 간 모델 이식성 한계 → 병원별 "
     f"site-specific 학습 필요.<br>"
     f"[5] Strack B, DeShazo JP, Gennings C, et al. Impact of HbA1c measurement on hospital "
     f"readmission rates: analysis of 70,000 clinical database patient records. "
-    f"<i>BioMed Res Int</i>. 2014;2014:781670. doi:10.1155/2014/781670. — ⑥ 탭 실데이터"
+    f"<i>BioMed Res Int</i>. 2014;2014:781670. doi:10.1155/2014/781670. : ⑥ 탭 실데이터"
     f"(UCI #296) 원 논문."
     f"</div></div>", unsafe_allow_html=True)
 st.caption("2026 연구 아이디어 기술사업화 챌린지 · 경북대학교병원 팀 · 개념검증(PoC) 데모")

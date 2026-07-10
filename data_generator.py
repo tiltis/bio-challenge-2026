@@ -1,5 +1,5 @@
 """
-data_generator.py — 정신질환 퇴원환자 코호트의 병원 EMR 합성 데이터 생성기.
+data_generator.py : 정신질환 퇴원환자 코호트의 병원 EMR 합성 데이터 생성기.
 
 신청서(AI 기반 Two-Track Care Coordination Platform) 방향에 맞춰
 '퇴원 시점' 1건당 1행(episode)으로 구성한다. 각 행은 한 환자의 퇴원 에피소드이며,
@@ -21,7 +21,7 @@ N_PATIENTS = 1500
 
 DIAGNOSES = ["조현병", "양극성장애", "우울장애", "불안장애"]
 
-# 모델 입력 피처 (EMR 추출 가능) — 표시 순서와 동일
+# 모델 입력 피처 (EMR 추출 가능) : 표시 순서와 동일
 NUMERIC_COLS = [
     "age", "prior_admissions", "index_los", "prior_ed_visits",
     "outpatient_visits_1y", "prior_noshow_rate", "n_psych_meds",
@@ -72,7 +72,7 @@ FEATURE_GROUPS = {
                    "distance_km", "substance_use", "charlson"],
 }
 
-# 위험(logit) 방향 계수 — 양수=치료중단/재입원 위험↑
+# 위험(logit) 방향 계수 : 양수=치료중단/재입원 위험↑
 # (선형 주효과는 의도적으로 약화하고, 위험의 상당부분을 아래 비선형 상호작용에 배분
 #  → 트리기반 XGBoost가 선형모델 대비 우위를 갖도록 현실적으로 설계)
 RISK_COEF = {

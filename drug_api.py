@@ -1,5 +1,5 @@
 """
-drug_api.py — 식약처 '의약품개요정보(e약은요)' 공공 API 연동 (실데이터 연결 ②).
+drug_api.py : 식약처 '의약품개요정보(e약은요)' 공공 API 연동 (실데이터 연결 ②).
 
 실제 데이터 소스:
 - 식품의약품안전처 공공데이터 개방 API (공공데이터포털 data.go.kr, 승인형 무료 키).
@@ -10,7 +10,7 @@ drug_api.py — 식약처 '의약품개요정보(e약은요)' 공공 API 연동 
 동작 방식:
 - 환경변수 DATA_GO_KR_API_KEY 가 있으면 → 실시간 API 조회 (source="live")
 - 없거나 실패하면 → drug_snapshot.json (동일 서비스 내용 요약 스냅샷)으로 폴백
-  (source="snapshot") — 데모가 인터넷·키 없이도 항상 동작하도록.
+  (source="snapshot") : 데모가 인터넷·키 없이도 항상 동작하도록.
 
 가드레일: 조회 결과는 '설명'에만 사용하며 처방·용량 판단에 사용하지 않는다.
 """
@@ -68,7 +68,7 @@ def _first_sentences(s, n=2):
 def fetch_live(item_name, timeout=6):
     """
     e약은요 API 실시간 조회. 성공 시 표준화된 dict, 실패 시 None.
-    (승인형 키 필요 — data.go.kr 에서 '의약품개요정보(e약은요)' 활용신청)
+    (승인형 키 필요 : data.go.kr 에서 '의약품개요정보(e약은요)' 활용신청)
     """
     key = api_key()
     if not key:

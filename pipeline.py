@@ -1,5 +1,5 @@
 """
-pipeline.py — XGBoost 위험예측 엔진 + SHAP 설명가능 AI + Two-Track 분류.
+pipeline.py : XGBoost 위험예측 엔진 + SHAP 설명가능 AI + Two-Track 분류.
 
 신청서 핵심기술 ①: 위험도 예측 엔진(Risk Stratification Engine)
 - 병원 EMR 피처로 '90일 내 치료중단/재입원' 위험을 XGBoost로 예측.
@@ -21,7 +21,7 @@ from data_generator import FEATURE_COLS, FEATURE_LABELS, feature_matrix
 TRACK2_THRESHOLD = 0.50     # 이상이면 고위험군(Track 2)
 TRACK_COLORS = {"Track 1": "#1f6feb", "Track 2": "#dc2626"}
 
-# 위험 밴드(설명·표시용) — 분류 자체는 Track 2 임계값으로 이분
+# 위험 밴드(설명·표시용) : 분류 자체는 Track 2 임계값으로 이분
 RISK_BANDS = [
     ("낮음",   0.00, 0.25, "Track 1 · 자가관리 가능군"),
     ("중간",   0.25, 0.50, "Track 1 · 건강문해력 집중 지원"),

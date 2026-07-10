@@ -15,7 +15,7 @@ streamlit run app.py     # http://localhost:8501
 ```
 
 - Python 3.12 / Streamlit 1.37 기준. `numpy<2` 핀 유지 필요.
-- `python app.py` 직접 실행은 동작하지 않습니다 — 반드시 `streamlit run`.
+- `python app.py` 직접 실행은 동작하지 않습니다 : 반드시 `streamlit run`.
 
 ## 구성
 
@@ -24,17 +24,17 @@ streamlit run app.py     # http://localhost:8501
 | `app.py` | 7탭 대시보드 (EMR → 위험예측 → 우선개입 대기열 → 개입 연계 → 차별점 → 실데이터 검증 → 신규 입력) |
 | `data_generator.py` | 합성 정신과 퇴원 EMR 1,500건 생성 (FHIR 매핑 설계) |
 | `pipeline.py` | XGBoost 위험예측 + TreeSHAP 설명 + Two-Track 분류 |
-| `rag_literacy.py` | RAG 기반 건강문해력 지원 (Track 1) — `ANTHROPIC_API_KEY` 설정 시 Claude 실시간 생성 |
+| `rag_literacy.py` | RAG 기반 건강문해력 지원 (Track 1) : `ANTHROPIC_API_KEY` 설정 시 Claude 실시간 생성 |
 | `drug_api.py` | 식약처 e약은요 공공 API (`DATA_GO_KR_API_KEY` 없으면 스냅샷 폴백) |
 | `real_data.py` | UCI #296 실환자 약 7만 명 로더 + 학습 (최초 실행 시 자동 다운로드) |
-| `mockup/` | MindLink 모바일 앱 목업 3종(설명용·흰배경·편집용) + 코드 편집용 분리 소스 — [mockup/README.md](mockup/README.md) |
+| `mockup/` | MindLink 모바일 앱 목업 3종(설명용·흰배경·편집용) + 코드 편집용 분리 소스 : [mockup/README.md](mockup/README.md) |
 
 ## 데이터·라이선스
 
-- **합성 코호트**: 자체 생성 가상 데이터 — 실제 환자 자료가 아닙니다.
-- **UCI #296** Diabetes 130-US Hospitals — CC BY 4.0, Strack et al. 2014.
+- **합성 코호트**: 자체 생성 가상 데이터 (실제 환자 자료가 아닙니다).
+- **UCI #296** Diabetes 130-US Hospitals : CC BY 4.0, Strack et al. 2014.
   `data_cache/`는 저장소에 포함하지 않으며 최초 실행 시 자동 다운로드됩니다.
-- **식약처 e약은요** — 공공데이터포털 공개 API (개인정보 아님).
+- **식약처 e약은요** : 공공데이터포털 공개 API (개인정보 아님).
 - **글꼴**: 아리따 부리(무료 배포)는 저장소에 포함하지 않습니다.
   [아모레퍼시픽 배포 페이지](https://www.apgroup.com/int/ko/about-us/visual-identity/arita-typeface/arita-typeface.html)에서
   받아 `static/fonts/AritaBuriKR-{Medium,SemiBold,Bold}.ttf`로 두면 적용되고, 없으면 시스템 serif로 폴백합니다.

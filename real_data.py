@@ -1,5 +1,5 @@
 """
-real_data.py — 실제 병원 데이터로 위험예측 파이프라인을 검증하는 모듈.
+real_data.py : 실제 병원 데이터로 위험예측 파이프라인을 검증하는 모듈.
 
 데이터: UCI ML Repository #296 "Diabetes 130-US Hospitals (1999-2008)"
 - 미국 130개 병원의 실제 입원 10만 건(비식별 처리 완료, 공개 라이선스 CC BY 4.0).
@@ -29,7 +29,7 @@ CSV_PATH = os.path.join(CACHE_DIR, "uci296", "diabetic_data.csv")
 ZIP_URL = ("https://archive.ics.uci.edu/static/public/296/"
            "diabetes+130-us+hospitals+for+years+1999-2008.zip")
 
-# 사망·호스피스 퇴원 코드 (IDS_mapping.csv 기준) — 재입원 정의 불가능 케이스
+# 사망·호스피스 퇴원 코드 (IDS_mapping.csv 기준) : 재입원 정의 불가능 케이스
 _EXCLUDE_DISPOSITION = {11, 13, 14, 19, 20, 21}
 
 # 연령 구간 → 중앙값 (예: "[50-60)" → 55)
@@ -57,7 +57,7 @@ UCI_FEATURE_LABELS = {
 }
 UCI_FEATURE_COLS = list(UCI_FEATURE_LABELS.keys())
 
-# 합성 정신과 코호트 ↔ UCI 실데이터 — 개념적으로 동일한 피처 매핑
+# 합성 정신과 코호트 ↔ UCI 실데이터 : 개념적으로 동일한 피처 매핑
 # (실데이터 검증 탭에서 "같은 스키마 사상으로 즉시 이식 가능"을 보여주는 표)
 FEATURE_MAPPING = [
     ("연령 / 성별",            "age, sex_male",             "age, gender"),
