@@ -1,7 +1,7 @@
 # AI 기반 Two-Track Care Coordination Platform (PoC 데모)
 
 정신질환 퇴원환자의 90일 내 치료중단·재입원 위험을 병원 EMR로 예측(XGBoost + SHAP)하고,
-일반군(Track 1)/고위험군(Track 2)으로 분류해 맞춤 개입을 연계하는 Streamlit 데모입니다.
+일반군(Track 1)/고위험군(Track 2)으로 분류해 맞춤 개입을 연계하는 Streamlit 데모입니다. 
 
 > 2026 연구 아이디어 기술사업화 챌린지 · 경북대학교병원 팀
 > 본 시스템은 **진단 도구가 아니며**, 위험 신호와 Track 배정만 제공합니다.
@@ -14,7 +14,8 @@
 | 보고 싶은 것 | 방법 |
 |---|---|
 | **① 데모 대시보드** (위험예측 PoC 본체) | 아래 [실행](#실행) 순서로 설치 후 `run.bat` 더블클릭 → 브라우저가 자동으로 열림 |
-| **② LinkCure(링큐어) 앱 목업** (모바일 화면 시안) | 설치·실행 필요 없음. [`mockup/linkcure_mockup_annotated.html`](mockup/linkcure_mockup_annotated.html)을 내려받아 **더블클릭**하면 끝 |
+| **② LinkCure(링큐어) 앱 목업** (모바일 화면 시안) | 설치·실행 필요 없음. [`mockup/linkcure_mockup_annotated.html`](mockup/linkcure_mockup_annotated.html)을 내려받아 **더블클릭**하면 끝 | <<이게 예시 사진으로 보여드린것  
+<img width="1322" height="1125" alt="image" src="https://github.com/user-attachments/assets/358c13e2-1d88-4fe7-90e2-f82f716ad16f" />
 
 ## 실행
 
