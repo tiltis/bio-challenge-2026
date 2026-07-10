@@ -7,6 +7,15 @@
 > 본 시스템은 **진단 도구가 아니며**, 위험 신호와 Track 배정만 제공합니다.
 > 모든 임상·연계 결정은 의료진과 의료사회복지사가 수행합니다.
 
+## 🚀 처음이신가요? 이것만 하면 됩니다
+
+이 저장소에는 **실행하는 것 1개**와 **그냥 여는 것 1개**가 있습니다.
+
+| 보고 싶은 것 | 방법 |
+|---|---|
+| **① 데모 대시보드** (위험예측 PoC 본체) | 아래 [실행](#실행) 순서로 설치 후 `run.bat` 더블클릭 → 브라우저가 자동으로 열림 |
+| **② LinkCure(링큐어) 앱 목업** (모바일 화면 시안) | 설치·실행 필요 없음. [`mockup/linkcure_mockup_annotated.html`](mockup/linkcure_mockup_annotated.html)을 내려받아 **더블클릭**하면 끝 |
+
 ## 실행
 
 ```bash
@@ -27,7 +36,7 @@ streamlit run app.py     # http://localhost:8501
 | `rag_literacy.py` | RAG 기반 건강문해력 지원 (Track 1) : `ANTHROPIC_API_KEY` 설정 시 Claude 실시간 생성 |
 | `drug_api.py` | 식약처 e약은요 공공 API (`DATA_GO_KR_API_KEY` 없으면 스냅샷 폴백) |
 | `real_data.py` | UCI #296 실환자 약 7만 명 로더 + 학습 (최초 실행 시 자동 다운로드) |
-| `mockup/` | MindLink 모바일 앱 목업 3종(설명용·흰배경·편집용) + 코드 편집용 분리 소스 : [mockup/README.md](mockup/README.md) |
+| `mockup/` | LinkCure 모바일 앱 목업 3종(설명용·흰배경·편집용) + 코드 편집용 분리 소스 : [mockup/README.md](mockup/README.md) |
 
 ## 데이터·라이선스
 
@@ -35,8 +44,9 @@ streamlit run app.py     # http://localhost:8501
 - **UCI #296** Diabetes 130-US Hospitals : CC BY 4.0, Strack et al. 2014.
   `data_cache/`는 저장소에 포함하지 않으며 최초 실행 시 자동 다운로드됩니다.
 - **식약처 e약은요** : 공공데이터포털 공개 API (개인정보 아님).
-- **글꼴**: 아리따 부리(무료 배포)는 저장소에 포함하지 않습니다.
+- **글꼴 (대시보드)**: 아리따 부리(무료 배포)는 저장소에 포함하지 않습니다.
   [아모레퍼시픽 배포 페이지](https://www.apgroup.com/int/ko/about-us/visual-identity/arita-typeface/arita-typeface.html)에서
   받아 `static/fonts/AritaBuriKR-{Medium,SemiBold,Bold}.ttf`로 두면 적용되고, 없으면 시스템 serif로 폴백합니다.
+- **글꼴 (앱 목업)**: 한글은 페이퍼로지(Paperlogy, 무료 글꼴·HTML에 내장), 영문·숫자는 Times New Roman 두 가지만 사용합니다.
 
 상세 개발 기록은 `작업일지.txt` 참조.

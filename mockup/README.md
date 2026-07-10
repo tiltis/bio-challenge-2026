@@ -1,4 +1,7 @@
-# MindLink 앱 목업 (모바일 화면 시안)
+# LinkCure(링큐어) 앱 목업 (모바일 화면 시안)
+
+> **💡 실행이 필요 없습니다.** HTML 파일을 내려받아 **더블클릭**하면 브라우저에 바로 열립니다.
+> 처음이라면 `linkcure_mockup_annotated.html` 하나만 열어보면 됩니다.
 
 정신질환 퇴원환자의 **사후관리 취약도**를 산출해 의료사회복지사가 우선 개입 환자를 확인하고,
 복약·생활지도를 **쉬운 말로** 전달하는 모바일 앱의 화면 시안입니다.
@@ -8,12 +11,14 @@
 
 | 파일 | 용도 | 여는 방법 |
 |---|---|---|
-| [`mindlink_mockup_annotated.html`](mindlink_mockup_annotated.html) | **설명용** : 발표·서류 첨부용 기본 시안 (회색 스튜디오 배경) | 더블클릭 → 브라우저 |
-| [`mindlink_mockup_white.html`](mindlink_mockup_white.html) | **흰 배경용** : 인쇄·문서 삽입용 (배경만 흰색, 내용 동일) | 더블클릭 → 브라우저 |
-| [`mindlink_mockup_editor.html`](mindlink_mockup_editor.html) | **편집용(단일 파일)** : 브라우저 안에서 마우스로 글자·배치 수정 | 더블클릭 → 우측 하단 `✏️ 편집 모드` |
+| [`linkcure_mockup_annotated.html`](linkcure_mockup_annotated.html) | **설명용** : 발표·서류 첨부용 기본 시안 (회색 스튜디오 배경) | 더블클릭 → 브라우저 |
+| [`linkcure_mockup_white.html`](linkcure_mockup_white.html) | **흰 배경용** : 인쇄·문서 삽입용 (배경만 흰색, 내용 동일) | 더블클릭 → 브라우저 |
+| [`linkcure_mockup_editor.html`](linkcure_mockup_editor.html) | **편집용(단일 파일)** : 브라우저 안에서 마우스로 글자·배치 수정 | 더블클릭 → 우측 하단 `✏️ 편집 모드` |
 | [`src/`](src/) | **코드 편집용(파일 분리)** : HTML/CSS/JS를 직접 고치는 개발자 방식 | 아래 설명 참고 |
 
 모든 파일은 폰트가 내장되어 있어 **인터넷 없이 어느 컴퓨터에서든** 열립니다.
+
+**글꼴**: 한글은 **페이퍼로지(Paperlogy)** (무료 글꼴, HTML 안에 내장되어 설치 불필요), 영문·숫자는 **Times New Roman** 두 가지만 사용합니다.
 
 ## 화면 구성 (폰 3대)
 
@@ -23,7 +28,7 @@
 
 ## 수정 방법 ① : 마우스로 (코딩 몰라도 됨)
 
-`mindlink_mockup_editor.html`을 브라우저로 열고 우측 하단 **✏️ 편집 모드** 클릭:
+`linkcure_mockup_editor.html`을 브라우저로 열고 우측 하단 **✏️ 편집 모드** 클릭:
 
 - **글자 클릭** = 그 자리에서 바로 수정
 - **꾹(0.4초) 누른 채 끌기** = 요소를 원하는 위치로 자유 이동
