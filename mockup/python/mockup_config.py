@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-LinkCure(링큐어) 앱 목업 : 편집 설정 파일
-=========================================
-이 파일의 값만 고치고 build_mockup.py 를 실행하면
-수정 내용이 반영된 목업 HTML이 새로 만들어집니다.
+# LinkCure 앱 목업 편집 설정 파일.
+# 이 파일의 값을 고친 뒤 build_mockup.py 를 실행하면 목업 HTML이 생성된다.
 
-실행 방법 (PyCharm: 초록 실행 버튼 / VS Code·터미널):
-    python build_mockup.py
-"""
-
-# ── 전체 설정 ──────────────────────────────────────────────
 TITLE = "LinkCure(링큐어) · 사회복지사용 사례관리 앱 목업"
-WHITE_BACKGROUND = False   # True 로 바꾸면 인쇄용 흰 배경으로 생성
-OUTPUT_FILE = "LinkCure_목업.html"   # 생성될 파일 이름
+WHITE_BACKGROUND = False   # True: 인쇄용 흰 배경
+OUTPUT_FILE = "LinkCure_목업.html"
 
-# ── 상단 리본(제목 배너) ───────────────────────────────────
+# 상단 리본(제목 배너)
 RIBBON = "LinkCure"
 RIBBON_SUB = "Linking Discharge to Continuous Care"
 DECK = (
@@ -22,22 +14,21 @@ DECK = (
     "<b>우선 개입할 환자</b>를 확인하고 <b>복약·생활지도를 쉬운 말로</b> 전달하는 모바일 화면"
 )
 
-# ── 폰 ① 메인(홈) 화면 ────────────────────────────────────
+# 폰 1: 메인(홈) 화면
 HOSPITAL_KR = "경북대학교병원"
 HOSPITAL_EN = "KYUNGPOOK NATIONAL UNIV. HOSPITAL"
 ROLE_CHIP = "의료사회복지사<br>진성현"
 
-# 컬러 타일 3개 : color 는 b(파랑)/r(빨강)/g(초록)
+# color: b(파랑) r(빨강) g(초록)
 TILES = [
     {"label": "오늘 관리<br>대상",  "value": "8", "unit": "명", "color": "b"},
     {"label": "신규<br>관리취약",   "value": "3", "unit": "명", "color": "r"},
     {"label": "센터 연계<br>대기",  "value": "5", "unit": "명", "color": "g"},
 ]
 
-HOME_TABS = ["홈", "담당 환자", "연계 현황", "통계"]   # 첫 번째가 선택 상태
+HOME_TABS = ["홈", "담당 환자", "연계 현황", "통계"]   # 첫 항목이 선택 상태
 
-# 아이콘 그리드 9칸 : icon 은 build_mockup.py 의 ICONS 목록 참고
-# badge 에 숫자를 넣으면 빨간 알림 동그라미가 붙음 (없으면 None)
+# icon: build_mockup.py 의 ICONS 키. badge: 알림 숫자(없으면 None)
 GRID = [
     {"label": "담당 환자<br>목록", "icon": "patients", "badge": "8"},
     {"label": "관리취약도<br>조회", "icon": "pulse",    "badge": None},
@@ -50,7 +41,6 @@ GRID = [
     {"label": "설정",              "icon": "gear",     "badge": None},
 ]
 
-# 개인정보 안내 카드
 PRIVACY_TITLE = "개인정보 처리 · 사전 동의 안내"
 PRIVACY_BADGE = "퇴원 시 사전 동의 완료"
 PRIVACY_ITEMS = [
@@ -62,10 +52,10 @@ PRIVACY_ITEMS = [
 ]
 PRIVACY_AGREE = "본인은 위 처리 방침에 동의합니다"
 
-# ── 폰 ② 환자 관리 화면 ───────────────────────────────────
+# 폰 2: 환자 관리 화면
 PHONE2_TITLE = "담당 환자 목록"
 
-# 상단 요약 4칸 : tone 은 ""(검정)/"hi"(빨강)/"lo"(초록)
+# tone: ""(검정) "hi"(빨강) "lo"(초록)
 SUMMARY = [
     {"value": "32", "label": "담당 전체", "tone": ""},
     {"value": "8",  "label": "관리취약",  "tone": "hi"},
@@ -73,12 +63,9 @@ SUMMARY = [
     {"value": "5",  "label": "연계 진행", "tone": ""},
 ]
 
-CHIPS = ["관리취약", "전체", "관리일반", "신규", "의료급여"]   # 첫 번째가 선택 상태
+CHIPS = ["관리취약", "전체", "관리일반", "신규", "의료급여"]   # 첫 항목이 선택 상태
 
-# 환자 카드 목록
-#   risk      : "hi"(관리취약·빨강) 또는 "lo"(관리일반·초록)
-#   insurance : ("med", "의료급여 1종") 또는 ("hb", "건강보험")
-#   tags      : 자유롭게 추가·삭제
+# risk: "hi"(관리취약) "lo"(관리일반) / insurance: ("med", 표시명) 또는 ("hb", 표시명)
 PATIENTS = [
     {"name": "김○○", "meta": "54 · 남 · 조현병",   "risk": "hi",
      "insurance": ("med", "의료급여 1종"), "tags": ["독거", "복약 불규칙", "외래 미방문"], "dday": "퇴원 D+9"},
@@ -90,12 +77,12 @@ PATIENTS = [
      "insurance": ("hb", "건강보험"), "tags": ["외래 규칙적"], "dday": "퇴원 D+22"},
 ]
 
-# ── 폰 ③ 복약·생활지도 화면 ───────────────────────────────
+# 폰 3: 복약·생활지도 화면
 PHONE3_TITLE = "복약·생활지도 해석"
 PT_NAME = "김○○"
-PT_AVATAR = "김"          # 동그라미 안 글자
+PT_AVATAR = "김"
 PT_META = "54 · 조현병 · 의료급여 1종"
-PT_RISK = "hi"            # "hi" 또는 "lo"
+PT_RISK = "hi"
 
 MED_SECTION_TITLE = "복약지도, 쉽게 풀어드려요"
 MED_ORIGINAL = "Olanzapine 10mg 1T qd HS<br>Paliperidone LAI 100mg IM q4wk"
@@ -106,7 +93,7 @@ MED_PLAIN = (
 MED_WARNING = "임의로 끊으면 증상이 재발할 수 있어요. 끊거나 줄일 땐 꼭 의료진과 상의하세요."
 
 LIFE_SECTION_TITLE = "생활지도, 이렇게 챙겨요"
-# icon 은 calendar_check / moon / bell / share 중 선택
+# icon: calendar_check / moon / bell / share
 LIFE_ITEMS = [
     {"icon": "calendar_check", "title": "외래 예약 지키기",
      "desc": "퇴원 2주 안에 정신건강의학과 외래를 꼭 방문하세요. 방문이 늦어지면 재발 위험이 커집니다."},
@@ -123,7 +110,7 @@ GUARD_TEXT = ("이 해석은 기존 퇴원 문서를 <b>쉽게 풀어 설명</b>
 BUTTON_PRIMARY = "환자에게 전달하기"
 BUTTON_GHOST = "인쇄"
 
-# ── 폰 아래 캡션 3개 ──────────────────────────────────────
+# 폰 아래 캡션
 CAPTIONS = [
     {"n": "1", "title": "메인화면 · 오늘의 사례관리",
      "desc": "담당 현황(개입 대상·신규 관리취약·연계 대기)과<br>주요 기능을 한눈에"},
@@ -133,6 +120,5 @@ CAPTIONS = [
      "desc": "어려운 처방·생활수칙을 쉬운 말로 바꿔<br>환자에게 전달 (RAG 근거 기반·가드레일)"},
 ]
 
-# ── 페이지 맨 아래 각주 ────────────────────────────────────
 FOOT = ("LinkCure: 사회복지사용 사례관리 앱 개념 시안<br>"
         "화면·인물·수치는 <b>예시</b>이며 실제 환자 데이터가 아닙니다")

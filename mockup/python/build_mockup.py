@@ -1,23 +1,13 @@
 # -*- coding: utf-8 -*-
-"""
-LinkCure(링큐어) 앱 목업 생성기
-================================
-mockup_config.py 의 내용을 읽어 완성된 목업 HTML을 만듭니다.
-
-사용법:
-    1) mockup_config.py 에서 원하는 값(환자, 숫자, 문구)을 수정
-    2) 이 파일 실행:  python build_mockup.py
-    3) 같은 폴더에 LinkCure_목업.html 이 생성됨 → 더블클릭해서 확인
-
-주의: ../src/ 폴더(fonts.css, styles.css, editor.js)가 있어야 합니다.
-      (저장소를 통째로 받았다면 이미 있습니다)
-"""
+# LinkCure 앱 목업 생성기.
+# mockup_config.py 의 값을 수정한 뒤 이 파일을 실행하면(python build_mockup.py)
+# 같은 폴더에 목업 HTML이 생성된다. ../src/ 폴더(fonts.css, styles.css, editor.js) 필요.
 from pathlib import Path
 import mockup_config as C
 
 SRC = Path(__file__).resolve().parent.parent / "src"
 
-# ── SVG 아이콘 모음 (mockup_config.py 의 icon 이름과 대응) ──
+# mockup_config.py 의 icon 이름과 대응하는 SVG
 ICONS = {
     "patients": '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
     "pulse": '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
@@ -216,8 +206,7 @@ def build():
 '''
     out = Path(__file__).resolve().parent / C.OUTPUT_FILE
     out.write_text(html, encoding="utf-8")
-    print(f"완성! → {out}")
-    print("더블클릭해서 브라우저로 열어 확인하세요.")
+    print(f"생성 완료: {out}")
 
 
 if __name__ == "__main__":
